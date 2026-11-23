@@ -929,7 +929,7 @@
 .work-duo .work-col:nth-child(2){margin-top:clamp(40px,6vw,90px)}
 .work-col{display:block}
 .work-meta{display:block;border-top:.5px solid #000;margin-top:24px;padding-top:14px}
-.work-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:26px}
+.work-foot{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-top:26px}
 .work-foot .tags{margin-top:0}.work-foot .work-view{margin-top:0;padding-top:0}
 @media(max-width:800px){.work-foot{flex-direction:column;align-items:flex-start}.work-row,.work-row.flip,.work-duo{grid-template-columns:1fr}.work-row.flip .work-img{order:0}.work-row{margin-bottom:64px;gap:20px}.work-duo .work-col:nth-child(2){margin-top:48px}.work-duo{gap:48px}.work-view{padding-top:24px}}
 .site-footer{min-height:110px;justify-content:center}
@@ -951,13 +951,13 @@ const nav=d=>`<nav class="site-nav ${d?'site-nav--dark':''}" aria-label="${u('na
 const foot=()=>`<footer class="site-footer" id="contact"><div class="reveal"><a href="https://www.linkedin.com/in/giovanna-arcieri-865abb83/" target="_blank" rel="noreferrer">LinkedIn</a><a class="email-address" href="mailto:${MAIL}">${MAIL}</a><span class="foot-r"><button data-lang="it" class="${L==='it'?'on':''}">IT</button> / <button data-lang="en" class="${L==='en'?'on':''}">EN</button></span></div></footer>`;
 const TAGS={bulgari:['Home page','Product page','High Jewellery'],lavazza:['Home page','Power Brands','Product page'],turismo:['Home page'],agid:['Struttura','Design System e accessibilità'],digitalizzazione:['Design System e accessibilità']};
 const descOf=k=>{const x=D.stories[k].find(s=>s.copy&&s.copy.length>30);return x?x.copy:''};
-const workInfo=(p,i,k)=>`<small>0${i+1} / 0${D.projects.length} · ${esc(T(p.label))}</small><h3>${esc(T(p.title))}</h3><p>${esc(T(descOf(p.key)))}</p>`;
+const workInfo=(p,i,k)=>`<h3>${esc(T(p.title))}</h3><p>${esc(T(descOf(p.key)))}</p>`;
 const tagsOf=p=>`<span class="tags">${TAGS[p.key].map(t=>`<i>${esc(T(t))}</i>`).join('')}</span>`;
 const view=()=>`<span class="work-view">${u('view').replace(' ↗','')} <em>↗</em></span>`;
 const work=()=>{const P=D.projects,n=P.length,ar=(p,i)=>`aria-label="${u('open')} ${esc(T(p.label))}"`;
 const row=(p,i)=>{const flip=i%2===1,imgCls=flip?'from-right':'from-left',infoCls=flip?'from-left':'from-right';
-return `<a class="work-row ${flip?'flip':''}" href="#/project/${p.key}" ${ar(p,i)}><span class="work-img reveal ${imgCls}"><img src="${p.cover}" alt=""><b>0${i+1}</b></span><span class="work-info reveal ${infoCls} d1">${workInfo(p,i)}${tagsOf(p)}${view()}</span></a>`};
-const col=(p,i)=>`<a class="work-col reveal d${i-1}" href="#/project/${p.key}" ${ar(p,i)}><span class="work-img"><img src="${p.cover}" alt=""><b>0${i+1}</b></span><span class="work-meta">${workInfo(p,i)}<span class="work-foot">${tagsOf(p)}${view()}</span></span></a>`;
+return `<a class="work-row ${flip?'flip':''}" href="#/project/${p.key}" ${ar(p,i)}><span class="work-img reveal ${imgCls}"><img src="${p.cover}" alt=""><b>0${i+1}</b></span><span class="work-info reveal ${infoCls} d1">${workInfo(p,i)}${view()}</span></a>`};
+const col=(p,i)=>`<a class="work-col reveal d${i-1}" href="#/project/${p.key}" ${ar(p,i)}><span class="work-img"><img src="${p.cover}" alt=""><b>0${i+1}</b></span><span class="work-meta">${workInfo(p,i)}<span class="work-foot">${view()}</span></span></a>`;
 return `<main id="projects" class="work"><div class="work-head reveal"><h2>${u('work')}</h2><span>01 – 0${n}</span></div>${P.slice(0,3).map(row).join('')}<div class="work-duo">${P.slice(3).map((p,j)=>col(p,j+3)).join('')}</div></main>`};
 const home=()=>`<div class="home page-enter">${nav(false)}<header class="home-hero"><div class="hero-water"><img src="assets/home/02d5a.webp" alt=""></div><img class="hero-light" src="assets/home/69f55.webp" alt=""><h1>Giovanna Arcieri</h1></header>${work()}${foot()}</div>`;
 const story=s=>{const w=s.layout==='wide',l=s.layout||'image-right',a=w?'':l==='image-left'?'from-left':'from-right',b=w?'':l==='image-left'?'from-right':'from-left';
